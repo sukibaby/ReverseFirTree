@@ -1,5 +1,4 @@
-# ReverseFirTree
-[![PSScriptAnalyzer](https://github.com/sukibaby/ReverseFirTree/actions/workflows/powershell.yml/badge.svg?branch=master)](https://github.com/sukibaby/ReverseFirTree/actions/workflows/powershell.yml)
+[![PSScriptAnalyzer](https://github.com/sukibaby/ReverseFirTree/actions/workflows/powershell.yml/badge.svg?branch=master&event=push)](https://github.com/sukibaby/ReverseFirTree/actions/workflows/powershell.yml)
 
 I didn't find any tool to easily format a list of variables as reverse fir tree (a.k.a. reverse christmas tree, reverse XMAS tree), so I threw together a little PowerShell script. :-)
 
