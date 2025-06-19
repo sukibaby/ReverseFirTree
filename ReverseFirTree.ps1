@@ -1,14 +1,14 @@
 <#
 .SYNOPSIS
     Formats assignment statements from an input file into a reverse fir tree (reverse XMAS tree) pattern.
-    
+
 .DESCRIPTION
     This script reads a file containing assignment statements, normalizes spacing,
     and sorts them by total line length (shortest to longest). The reverse fir tree
     style is preferred by Kernel Maintainers KVM 5.4.2. "Coding Style".
 
     TODO: add C++ data type awareness for better sorting
-    
+
 .PARAMETER InputFile
     The full path to the file containing assignment statements to be processed.
     Each line should follow the pattern: [type] variable = value;
