@@ -28,8 +28,38 @@ if (-not (Test-Path $InputFile)) {
 # ===== TIE-BREAKING / RANKING =====
 # Data type size order for tie-breaking (lower index = larger type)
 $typeOrder = @(
-    'long double', 'double', 'int64_t', 'long long', 'unsigned long long',
-    'int32_t', 'int', 'float', 'unsigned int', 'short', 'char', 'bool'
+    # Extended precision (GCC-specific)
+    'long double',
+
+    # 64-bit types
+    'double',
+    'int64_t', 'uint64_t',
+    'long long', 'unsigned long long',
+    '__int64', 'unsigned __int64',
+
+    # 32- or 64-bit, depending on platform
+    'long', 'unsigned long',
+
+    # 32-bit types
+    'int32_t', 'uint32_t',
+    'int', 'unsigned int',
+    '__int32', 'unsigned __int32',
+
+    # 16-bit types
+    'int16_t', 'uint16_t',
+    'short', 'unsigned short',
+    '__int16', 'unsigned __int16',
+
+    # 8-bit types
+    'int8_t', 'uint8_t',
+    'char', 'unsigned char',
+    '__int8', 'unsigned __int8',
+
+    # Boolean and pointer-sized types
+    'bool',
+    'intptr_t', 'uintptr_t',
+    'size_t', 'ssize_t',
+    'ptrdiff_t'
 )
 
 function Get-TypeRank($type) {
