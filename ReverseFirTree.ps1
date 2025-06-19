@@ -70,15 +70,17 @@ Get-Content $InputFile | ForEach-Object {
         $type = ""
         if ($lhs -match '^(.*\S)\s+([a-zA-Z_]\w*)$') {
             $type = $matches[1]
-        } elseif ($lhs -match '^([a-zA-Z_][\w\*]*)([a-zA-Z_]\w*)$') {
+        }
+        elseif ($lhs -match '^([a-zA-Z_][\w\*]*)([a-zA-Z_]\w*)$') {
             $type = $matches[1]
-        } else {
+        }
+        else {
             $type = $lhs
         }
 
         $assignments += [PSCustomObject]@{
-            LHS = $lhs
-            RHS = $rhs
+            LHS  = $lhs
+            RHS  = $rhs
             Type = $type
         }
     }
@@ -88,9 +90,9 @@ Get-Content $InputFile | ForEach-Object {
 # ===== REVERSE FIR TREE SORTING =====
 # Sort assignment by longest to shortest, then by type size, then alphabetically
 $assignments = $assignments | Sort-Object `
-    @{Expression={($_.LHS.Length + $_.RHS.Length)}; Descending=$true},
-    @{Expression={Get-TypeRank $_.Type}; Ascending=$true},
-    @{Expression={$_.LHS}; Ascending=$true}
+@{Expression = { ($_.LHS.Length + $_.RHS.Length) }; Descending = $true },
+@{Expression = { Get-TypeRank $_.Type }; Ascending = $true },
+@{Expression = { $_.LHS }; Ascending = $true }
 
 # ===== OUTPUT FILE GENERATION =====
 # Format each assignment with consistent spacing: "lhs = rhs;"
