@@ -13,6 +13,9 @@
     The full path to the file containing assignment statements to be processed.
     Each line should follow the pattern: [type] variable = value;
     Extraneous whitespace will be trimmed and normalized.
+	
+.LINK
+    https://github.com/sukibaby/ReverseFirTree
 #>
 
 param (
