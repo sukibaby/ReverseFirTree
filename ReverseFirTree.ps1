@@ -109,6 +109,6 @@ $outLines = $outLines | ForEach-Object {
 $outLines | Set-Content $outputFile -Encoding UTF8
 
 # Finish up :-D
-Write-Host "Output written to: $outputFile"
+Write-Information "Output written to: $outputFile"
 
 # https://github.com/sukibaby
