@@ -25,6 +25,24 @@ if (-not (Test-Path $InputFile)) {
     exit 1
 }
 
+# ===== TIE-BREAKING / RANKING =====
+# Data type size order for tie-breaking (lower index = larger type)
+$typeOrder = @(
+    'long double', 'double', 'int64_t', 'long long', 'unsigned long long',
+    'int32_t', 'int', 'float', 'unsigned int', 'short', 'char', 'bool'
+)
+
+function Get-TypeRank($type) {
+    $type = $type.Trim()
+    $idx = $typeOrder.IndexOf($type)
+    if ($idx -ge 0) { return $idx }
+    # Try to match partials (e.g., "unsigned int" in "unsigned int last_cursor_pos")
+    foreach ($t in $typeOrder) {
+        if ($type -like "$t*") { return $typeOrder.IndexOf($t) }
+    }
+    return [int]::MaxValue
+}
+
 # ===== OUTPUT FILE PREPARATION =====
 # Default $dir to . if it's empty (for running within PowerShell ISE, etc)
 $dir = Split-Path $InputFile
@@ -47,17 +65,32 @@ Get-Content $InputFile | ForEach-Object {
     if ($line -match '^(.*?)\s*=\s*(.*?);$') {
         $lhs = $matches[1].TrimEnd()
         $rhs = $matches[2].Trim()
+
+        # Try to split type and variable for type-based sorting
+        $type = ""
+        if ($lhs -match '^(.*\S)\s+([a-zA-Z_]\w*)$') {
+            $type = $matches[1]
+        } elseif ($lhs -match '^([a-zA-Z_][\w\*]*)([a-zA-Z_]\w*)$') {
+            $type = $matches[1]
+        } else {
+            $type = $lhs
+        }
+
         $assignments += [PSCustomObject]@{
             LHS = $lhs
             RHS = $rhs
+            Type = $type
         }
     }
     # Lines that don't match the assignment pattern are silently ignored.
 }
 
 # ===== REVERSE FIR TREE SORTING =====
-# Sort assignments by total length (lhs + rhs) from shortest to longest
-$assignments = $assignments | Sort-Object { ($_.LHS.Length + $_.RHS.Length) }
+# Sort assignment by longest to shortest, then by type size, then alphabetically
+$assignments = $assignments | Sort-Object `
+    @{Expression={($_.LHS.Length + $_.RHS.Length)}; Descending=$true},
+    @{Expression={Get-TypeRank $_.Type}; Ascending=$true},
+    @{Expression={$_.LHS}; Ascending=$true}
 
 # ===== OUTPUT FILE GENERATION =====
 # Format each assignment with consistent spacing: "lhs = rhs;"
