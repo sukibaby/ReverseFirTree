@@ -4,8 +4,10 @@
 
 .DESCRIPTION
     This script reads a file containing assignment statements, normalizes spacing,
-    and sorts them by total line length (shortest to longest). The reverse fir tree
-    style is preferred by Kernel Maintainers KVM 5.4.2. "Coding Style".
+    and sorts them by total line length (shortest to longest). It also considers the
+    sizes of common C++ datatypes to further refine the sorting.
+    
+    The reverse fir tree style is preferred by Kernel Maintainers KVM 5.4.2. "Coding Style".
 
 .PARAMETER InputFile
     The full path to the file containing assignment statements to be processed.
