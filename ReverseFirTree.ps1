@@ -89,9 +89,13 @@ Get-Content $InputFile | ForEach-Object {
 
 # ===== REVERSE FIR TREE SORTING =====
 # Sort assignment by longest to shortest, then by type size, then alphabetically
+# Note: the backtick is used to continue the command on the next line.
 $assignments = $assignments | Sort-Object `
+# Sort by the combined length of LHS and RHS (descending)
 @{Expression = { ($_.LHS.Length + $_.RHS.Length) }; Descending = $true },
+# Sort by type size (ascending)
 @{Expression = { Get-TypeRank $_.Type }; Ascending = $true },
+# Sort by LHS alphabetically (ascending)
 @{Expression = { $_.LHS }; Ascending = $true }
 
 # ===== OUTPUT FILE GENERATION =====
