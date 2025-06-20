@@ -33,3 +33,6 @@ It is capable of tie-breaking for commonly known C++ datatypes, and falls back o
 It uses PowerShell features which were introdued in PowerShell 3.0, so it should run as-is on the PowerShell that ships with Windows 8 and higher. Windows 7 users may need to upgrade first though.
 
 Reverse fir tree styling is not very well documented, but is recommended in Kernel Maintainers [KVM 5.4.2 "Coding Style"](https://docs.kernel.org/process/maintainer-kvm-x86.html). Please feel free to suggest ways the sorting could be improved!
+
+![Chibi_Avatar (1)](https://github.com/user-attachments/assets/84a9f408-1ba0-4e3f-81ad-b172d2d95b7b)
+
