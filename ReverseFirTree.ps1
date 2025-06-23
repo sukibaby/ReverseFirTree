@@ -94,6 +94,7 @@ Get-Content $InputFile | ForEach-Object {
     # Normalize whitespace: Remove all tabs, then trim leading/trailing spaces
     $line = $_ -replace "`t", " " | ForEach-Object { $_.Trim() }
 
+    # TODO: Fix handling of uninitialized variables (e.g. `int x;`)
     # "lhs = rhs;"
     if ($line -match '^(.*?)\s*=\s*(.*?);$') {
         $lhs = $matches[1].TrimEnd()
